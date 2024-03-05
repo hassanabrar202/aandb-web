@@ -1,13 +1,7 @@
-import { IconType } from 'react-icons'
-
 export const GButton = ({
 	classname,
 	name,
-	onClick
-}: {
-	name: string
-	classname?: string
-	onClick: () => void
+	onClick,
 }) => {
 	return (
 		<div className={classname}>
@@ -27,12 +21,6 @@ export const GOutlineButton = ({
 	onClick,
 	icon: Icon,
 	buttonClassName
-}: {
-	name: string
-	classname?: string
-	onClick: () => void
-	icon?: IconType
-	buttonClassName?: string
 }) => {
 	return (
 		<div className={classname}>

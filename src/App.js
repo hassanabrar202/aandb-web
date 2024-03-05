@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Home from "./components/Home";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import PageNotFound from "./components/404";
+import './App.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const router = createBrowserRouter([
+        {
+            path: '*',
+            element: <PageNotFound />
+        },
+        {
+            path: '/',
+            element: <Home />
+        },
+        {
+            path: '/signup',
+            element: <Signup />
+        },
+        {
+            path: '/login',
+            element: <Login />
+        },
+        // {
+        //     path: '/forgot-password',
+        //     element: <ForgotPasswordView />
+        // },
+        // {
+        //     path: '/admin',
+        //     element: <AdminDashboard />
+        // },
+        // {
+        //     path: '/admin/login',
+        //     element: <AdminLogin />
+        // }
+    ])
+    return (
+        <div className="flex flex-col items-center justify-center overflow-x-hidden">
+            <div className="w-full">
+                <RouterProvider router={router} />
+            </div>
+        </div>
+    )
 }
 
-export default App;
+export default App

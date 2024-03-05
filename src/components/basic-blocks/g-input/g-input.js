@@ -1,15 +1,6 @@
 import React from 'react';
 
-interface GInputProps {
-	label: string;
-	placeholder?: string;
-	classname?: string;
-	type?: string;
-	showLogo?: boolean;
-	logo?: JSX.Element; // JSX.Element type for the logo
-}
-
- const GInput: React.FC<GInputProps> = ({
+ const GInput = ({
 																								label,
 																								placeholder,
 																								classname,
