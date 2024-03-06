@@ -1,18 +1,4 @@
-import React, { useState } from 'react'
-import {
-  Button,
-  Card,
-  Image,
-  Input,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
-  NavbarMenuToggle,
-  Link,
-} from '@nextui-org/react'
+import { Button, Card, Image, Input } from '@nextui-org/react'
 import CountUp from 'react-countup'
 import 'swiper/css'
 import {
@@ -29,9 +15,8 @@ import { LuBird } from 'react-icons/lu'
 import { OurTeam } from './home/OurTeam'
 import { Testimonials } from './home/Testimonials'
 import { SwiperComponent } from './home/Swiper'
+import { NavbarComponent } from './Navbar'
 const Home = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const menuItems = ['Home', 'Ads', 'Profile', 'Logout']
   const browserCategories = [
     {
       id: 0,
@@ -84,85 +69,6 @@ const Home = () => {
   ]
   return (
     <>
-      <Navbar
-        isBordered
-        isMenuOpen={isMenuOpen}
-        onMenuOpenChange={setIsMenuOpen}
-        className='shadow'
-      >
-        <NavbarContent>
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? 'Close' : 'Open'}
-            className='sm:hidden'
-          />
-          <NavbarBrand className='justify-center sm:justify-normal'>
-            <p className='font-bold text-inherit flex items-center'>
-              A&B Mart
-              <span className='pl-2'>
-                <GiKiwiBird />
-              </span>
-            </p>
-          </NavbarBrand>
-        </NavbarContent>
-
-        <NavbarContent
-          className='hidden md:flex md:flex-row md:gap-4'
-          justify='center'
-        >
-          <NavbarItem>
-            <Link color='foreground' href='#' className='text-inherit'>
-              Home
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link href='#' aria-current='page' className='text-inherit'>
-              Ads
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarContent className='hidden sm:flex sm:flex-row' justify='end'>
-          <NavbarItem>
-            <Button color='primary' variant='solid'>
-              Sold Pets
-            </Button>
-          </NavbarItem>
-          <NavbarItem>
-            <a href='/signup'>
-              <Button color='primary' variant='solid'>
-                Sign Up
-              </Button>
-            </a>
-          </NavbarItem>
-          <NavbarItem>
-            <a href='/login'>
-              <Button color='primary' variant='solid'>
-                Login
-              </Button>
-            </a>
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarMenu className='pt-12'>
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? 'primary'
-                    : index === menuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
-                }
-                className='w-full'
-                href='#'
-                size='lg'
-              >
-                {item}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
-      </Navbar>
-
       <div className='w-full h-screen flex flex-row bg-gray-900 text-white'>
         <div className='flex flex-col md:flex-row items-center justify-center'>
           <div className='md:w-1/2 p-8'>
