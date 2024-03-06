@@ -5,6 +5,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import PageNotFound from "./components/404";
 import './App.css'
+import Chat from "./components/Chat";
 
 function App() {
     const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
         {
             path: '/login',
             element: <Login />
+        },
+        {
+            path: '/chat',
+            element: <Chat />
         },
         // {
         //     path: '/forgot-password',
