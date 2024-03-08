@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { AuthContext } from '../utils/ContextProvider'
-import { Card, CardBody, CardHeader, Image, Input } from '@nextui-org/react'
+import { Card, CardBody, Input } from '@nextui-org/react'
 
 const Signup = () => {
   const { registerUser } = useContext(AuthContext)
@@ -33,13 +33,16 @@ const Signup = () => {
         {/*  className='hidden md:block'*/}
         {/*/>*/}
         <Card className='px-32 shadow-none lg:w-max'>
-          <CardHeader>Signup</CardHeader>
+          <div className='pt-8 font-bold text-4xl leading-3 text-center'>
+            Signup
+          </div>
           <CardBody>
+            <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
+              Enter your Email
+            </div>
             <Input
-              label='Email'
               defaultValue='Enter your Email'
               type='email'
-              name='email'
               value={formData.email}
               onChange={handleChange}
               placeholder='Enter email address'
@@ -50,11 +53,9 @@ const Signup = () => {
             </div>
             <Input
               type='password'
-              label='Password'
-              name='password'
               value={formData.password}
               onChange={handleChange}
-              placeholder='Password'
+              placeholder='********'
               required={true}
             />
             <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
@@ -62,11 +63,9 @@ const Signup = () => {
             </div>
             <Input
               type='text'
-              label='First Name'
-              name='firstname'
               value={formData.firstname}
               onChange={handleChange}
-              placeholder='Enter your First Name'
+              placeholder='John'
               required={true}
             />
             <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
@@ -74,11 +73,9 @@ const Signup = () => {
             </div>
             <Input
               type='text'
-              label='Last Name'
-              name='lastname'
               value={formData.lastname}
               onChange={handleChange}
-              placeholder='Enter your Last Name'
+              placeholder='Doe'
               required={true}
             />
             <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
@@ -86,11 +83,9 @@ const Signup = () => {
             </div>
             <Input
               type='text'
-              label='Username'
-              name='username'
               value={formData.username}
               onChange={handleChange}
-              placeholder='Enter your Username'
+              placeholder='John Doe'
               required={true}
             />
             <button

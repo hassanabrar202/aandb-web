@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../utils/ContextProvider'
-import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react'
+import { Button, Card, CardBody, Input } from '@nextui-org/react'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -20,13 +20,14 @@ const Login = () => {
 
   return (
     <div className='h-screen bg-white flex flex-col justify-center items-center mx-auto'>
-      <Card className='md:w-[768px] max-w-max mx-auto items-center justify-evenly py-4'>
+      <Card className=' md:w-[768px] max-w-max mx-auto items-center justify-evenly py-4'>
         <Card className='px-8 md:px-32 shadow-none lg:w-max'>
-          <CardHeader>Login</CardHeader>
+          <div className='py-8 font-bold text-4xl leading-3 text-center'>
+            Login
+          </div>
           <CardBody className='flex flex-col gap-4'>
             <Input
               label='Email'
-              defaultValue='Enter your Email'
               type='email'
               name='email'
               value={credentials.email}
@@ -35,10 +36,11 @@ const Login = () => {
                 setCredentials({ ...credentials, email: e.target.value })
               }
               required={true}
+              variant={'bordered'}
+              isRequired={true}
             />
             <Input
-              label='Email'
-              defaultValue='Enter your Email'
+              label='Password'
               type='password'
               name='Password'
               value={credentials.password}
@@ -47,6 +49,8 @@ const Login = () => {
                 setCredentials({ ...credentials, password: e.target.value })
               }
               required={true}
+              variant={'bordered'}
+              isRequired={true}
             />
           </CardBody>
         </Card>

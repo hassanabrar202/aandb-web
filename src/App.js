@@ -7,6 +7,7 @@ import PageNotFound from './components/404'
 import './App.css'
 import Chat from './components/Chat'
 import { NavbarComponent } from './components/Navbar'
+import Dashboard from './components/Dashboard/Dashboard'
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
     {
       path: '/',
       element: <Home />,
+    },
+    {
+      path: '/dashboard',
+      element: <Dashboard />,
     },
     {
       path: '/signup',
@@ -45,7 +50,7 @@ function App() {
   ])
   return (
     <div className='flex flex-col items-center justify-center overflow-x-hidden'>
-      <NavbarComponent />
+      <NavbarComponent currentPath={window.location.pathname} />
       <div className='w-full'>
         <RouterProvider router={router} />
       </div>

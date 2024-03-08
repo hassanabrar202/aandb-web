@@ -1,4 +1,4 @@
-import { Button, Card, Image, Input } from '@nextui-org/react'
+import { Button, Card, Image, Input, Link } from '@nextui-org/react'
 import CountUp from 'react-countup'
 import 'swiper/css'
 import {
@@ -15,7 +15,6 @@ import { LuBird } from 'react-icons/lu'
 import { OurTeam } from './home/OurTeam'
 import { Testimonials } from './home/Testimonials'
 import { SwiperComponent } from './home/Swiper'
-import { NavbarComponent } from './Navbar'
 const Home = () => {
   const browserCategories = [
     {
@@ -84,10 +83,16 @@ const Home = () => {
               care and attention
             </p>
             <div className='flex flex-row gap-4 py-2'>
-              <Button color='primary' variant='solid'>
-                Get Started ->
+              <Button
+                as={Link}
+                href='/dashboard'
+                showAnchorIcon
+                color='primary'
+                variant='solid'
+              >
+                Get Started
               </Button>
-              <Button color='primary' variant='ghost'>
+              <Button href='/signup' as={Link} color='primary' variant='ghost'>
                 Sign Up
               </Button>
             </div>
@@ -140,30 +145,32 @@ const Home = () => {
 
       <Testimonials />
 
-      <Card
-        isBlurred={true}
-        className='mx-8 h-max bg-cover bg-no-repeat'
-        style={{
-          backgroundImage: `url(real-estate-background.jpg)`,
-        }}
-      >
-        <div className='mx-auto max-w-2xl px-8 sm:py-48 lg:px-0 text-center'>
-          <h1 className='bg-white rounded-2xl py-2 bg-clip-text text-transparent text-4xl font-bold tracking-tight sm:text-6xl'>
-            Skip the small hassels. Step seamlessly into your new space
-          </h1>
-          <p className='hidden sm:block bg-neutral-950/75 rounded-2xl py-2 text-white mt-6 text-lg leading-8'>
-            Drop your mail and our team will hit you in a while
-          </p>
-          <form>
-            <Input
-              type='email'
-              label='Email'
-              placeholder='Enter your email'
-              variant='flat'
-            />
-          </form>
-        </div>
-      </Card>
+      <div className='py-8'>
+        <Card
+          isBlurred={true}
+          className='mx-8 h-max bg-cover bg-no-repeat'
+          style={{
+            backgroundImage: `url(real-estate-background.jpg)`,
+          }}
+        >
+          <div className='mx-auto max-w-2xl px-8 sm:py-48 lg:px-0 text-center'>
+            <h1 className='bg-white rounded-2xl py-2 bg-clip-text text-transparent text-4xl font-bold tracking-tight sm:text-6xl'>
+              Skip the small hassels. Step seamlessly into your new space
+            </h1>
+            <p className='hidden sm:block bg-neutral-950/75 rounded-2xl py-2 text-white mt-6 text-lg leading-8'>
+              Drop your mail and our team will hit you in a while
+            </p>
+            <form>
+              <Input
+                type='email'
+                label='Email'
+                placeholder='Enter your email'
+                variant='flat'
+              />
+            </form>
+          </div>
+        </Card>
+      </div>
 
       <OurTeam />
 

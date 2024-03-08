@@ -12,7 +12,7 @@ import {
 import { GiKiwiBird } from 'react-icons/gi'
 import React, { useState } from 'react'
 
-export const NavbarComponent = () => {
+export const NavbarComponent = ({ currentPath }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuItems = ['Home', 'Ads', 'Profile', 'Logout']
   return (
@@ -29,12 +29,14 @@ export const NavbarComponent = () => {
             className='sm:hidden'
           />
           <NavbarBrand className='justify-center sm:justify-normal'>
-            <p className='font-bold text-inherit flex items-center'>
-              A&B Mart
-              <span className='pl-2'>
-                <GiKiwiBird />
-              </span>
-            </p>
+            <Link href='/' color={'foreground'}>
+              <p className='font-bold text-inherit flex items-center'>
+                A&B Mart
+                <span className='pl-2'>
+                  <GiKiwiBird />
+                </span>
+              </p>
+            </Link>
           </NavbarBrand>
         </NavbarContent>
 
@@ -59,20 +61,24 @@ export const NavbarComponent = () => {
               Sold Pets
             </Button>
           </NavbarItem>
-          <NavbarItem>
-            <a href='/signup'>
-              <Button color='primary' variant='solid'>
-                Sign Up
-              </Button>
-            </a>
-          </NavbarItem>
-          <NavbarItem>
-            <a href='/login'>
-              <Button color='primary' variant='solid'>
-                Login
-              </Button>
-            </a>
-          </NavbarItem>
+          {currentPath === '/signup' && (
+            <NavbarItem>
+              <Link href='/login'>
+                <Button color='primary' variant='solid'>
+                  Login
+                </Button>
+              </Link>
+            </NavbarItem>
+          )}
+          {currentPath === '/login' && (
+            <NavbarItem>
+              <Link href='/signup'>
+                <Button color='primary' variant='solid'>
+                  Sign Up
+                </Button>
+              </Link>
+            </NavbarItem>
+          )}
         </NavbarContent>
         <NavbarMenu className='pt-12'>
           {menuItems.map((item, index) => (
