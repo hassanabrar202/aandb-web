@@ -50,7 +50,11 @@ export const NavbarComponent = ({ currentPath }) => {
             </Link>
           </NavbarItem>
           <NavbarItem isActive>
-            <Link href='#' aria-current='page' className='text-inherit'>
+            <Link
+              href='/dashboard'
+              aria-current='page'
+              className='text-inherit'
+            >
               Ads
             </Link>
           </NavbarItem>
@@ -61,7 +65,7 @@ export const NavbarComponent = ({ currentPath }) => {
               Sold Pets
             </Button>
           </NavbarItem>
-          {currentPath === '/signup' && (
+          {(currentPath === '/' || currentPath === '/signup') && (
             <NavbarItem>
               <Link href='/login'>
                 <Button color='primary' variant='solid'>
