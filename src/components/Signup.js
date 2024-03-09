@@ -25,79 +25,47 @@ const Signup = () => {
   }
 
   return (
-    <Card className='h-screen w-full'>
-      <Card className='flex flex-row w-[768px] max-w-max mx-auto my-auto items-center justify-evenly'>
-        {/*<Image*/}
-        {/*  src='https://img.freepik.com/free-photo/vibrant-gold-blue-macaw-perched-nature-generated-by-ai_188544-15513.jpg?size=626&ext=jpg&ga=GA1.1.1395880969.1709596800&semt=ais'*/}
-        {/*  alt='imma bird'*/}
-        {/*  className='hidden md:block'*/}
-        {/*/>*/}
-        <Card className='px-32 shadow-none lg:w-max'>
-          <div className='pt-8 font-bold text-4xl leading-3 text-center'>
-            Signup
+      <div className='h-screen bg-white flex flex-col justify-center items-center mx-auto'>
+        <div className="container flex flex-col mx-auto bg-white rounded-lg pt-12 my-5">
+          <div className="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
+            <div className="flex items-center justify-center w-full lg:p-12">
+              <div className="flex items-center xl:p-10">
+                <form className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl">
+                  <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">Sign In</h3>
+                  <p className="mb-4 text-grey-700">Enter your email and password</p>
+                  <a className="flex items-center justify-center border w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">
+                    <img className="h-5 mr-2"
+                         src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
+                         alt=""/>
+                    Sign in with Google
+                  </a>
+                  <div className="flex items-center mb-3">
+                    <hr className="h-0 border-b border-solid border-grey-500 grow"/>
+                    <p className="mx-4 text-grey-600">or</p>
+                    <hr className="h-0 border-b border-solid border-grey-500 grow"/>
+                  </div>
+                  <label htmlFor="email" className="mb-2 text-sm text-start text-grey-900">Email*</label>
+                  <input id="email" type="email" placeholder="mail@loopple.com"
+                         className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium border focus:bg-grey-400  rounded-2xl"/>
+                  <label htmlFor="password" className="mb-2 text-sm text-start text-grey-900">Password*</label>
+                  <input id="password" type="password" placeholder="Enter a password"
+                         className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium border focus:bg-grey-400  rounded-2xl"/>
+                  <label htmlFor="password" className="mb-2 text-sm text-start text-grey-900">Confirm Password*</label>
+                  <input id="password" type="password" placeholder="Enter a password"
+                         className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium border focus:bg-grey-400  rounded-2xl"/>
+                  <button
+                      className="w-full border px-6 py-5 mb-5 text-sm font-bold leading-none transition duration-300 md:w-96 rounded-2xl ">Sign
+                    up
+                  </button>
+                  <p className="text-sm leading-relaxed text-grey-900">Already Registered ? <a href="/login"
+                                                                                              className="font-bold text-grey-700">Login</a></p>
+                </form>
+              </div>
+            </div>
           </div>
-          <CardBody>
-            <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
-              Enter your Email
-            </div>
-            <Input
-              defaultValue='Enter your Email'
-              type='email'
-              value={formData.email}
-              onChange={handleChange}
-              placeholder='Enter email address'
-              required={true}
-            />
-            <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
-              Enter your Password
-            </div>
-            <Input
-              type='password'
-              value={formData.password}
-              onChange={handleChange}
-              placeholder='********'
-              required={true}
-            />
-            <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
-              Enter your First Name
-            </div>
-            <Input
-              type='text'
-              value={formData.firstname}
-              onChange={handleChange}
-              placeholder='John'
-              required={true}
-            />
-            <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
-              Enter your Last Name
-            </div>
-            <Input
-              type='text'
-              value={formData.lastname}
-              onChange={handleChange}
-              placeholder='Doe'
-              required={true}
-            />
-            <div className='text-black text-base leading-10 mt-4 max-md:max-w-full'>
-              Enter your Username
-            </div>
-            <Input
-              type='text'
-              value={formData.username}
-              onChange={handleChange}
-              placeholder='John Doe'
-              required={true}
-            />
-            <button
-              onClick={handleSignup}
-              className='text-neutral-50 text-2xl font-bold leading-10 whitespace-nowrap justify-center items-center bg-sky-600 mt-6 px-16 py-2.5 rounded-lg max-md:max-w-full max-md:px-5'
-            >
-              Sign Up
-            </button>
-          </CardBody>
-        </Card>
-      </Card>
-    </Card>
+        </div>
+
+      </div>
   )
 }
 

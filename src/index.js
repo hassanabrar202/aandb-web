@@ -5,13 +5,16 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { NextUIProvider } from '@nextui-org/react'
 import ContextProvider from './utils/ContextProvider';
+import { Container } from '@nextui-org/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
       <ContextProvider>
         <NextUIProvider>
+            <div className='max-w-[2000px] m-auto'>
             <App />
+            </div>
         </NextUIProvider>
       </ContextProvider>
   </React.StrictMode>,

@@ -58,6 +58,15 @@ export const NavbarComponent = ({ currentPath }) => {
               Ads
             </Link>
           </NavbarItem>
+          <NavbarItem >
+            <Link
+              href='/chat'
+              aria-current='page'
+              className='text-inherit'
+            >
+              Chat
+            </Link>
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent className='hidden sm:flex sm:flex-row' justify='end'>
           <NavbarItem>
