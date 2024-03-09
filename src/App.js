@@ -8,6 +8,7 @@ import './App.css'
 import Chat from './components/Chat'
 import { NavbarComponent } from './components/Navbar'
 import Dashboard from './components/Dashboard/Dashboard'
+import CreateAd from "./components/Dashboard/create-ad";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
     {
       path: '/dashboard',
       element: <Dashboard />,
+    },
+    {
+      path: '/ad-create',
+      element: <CreateAd />,
     },
     {
       path: '/signup',

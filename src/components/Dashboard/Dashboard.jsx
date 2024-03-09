@@ -1,8 +1,10 @@
 import { Card, Input, Button } from '@nextui-org/react'
 import React, { useState } from 'react'
 import Birds from './Birds/Birds'
+import {useNavigate} from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate=useNavigate()
   const [selectedOption, setSelectedOption] = useState(null)
   const [searchName, setSearchName] = useState('')
   const [allBirds] = useState([
@@ -85,7 +87,7 @@ const Dashboard = () => {
                  className="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">My Ads</a>
             </li>
             <li>
-              <Button color='primary' variant='solid'>
+              <Button onClick={()=>navigate('/ad-create')} color='primary' variant='solid'>
                 Create Ad
               </Button>
             </li>
