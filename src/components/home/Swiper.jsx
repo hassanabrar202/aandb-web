@@ -2,8 +2,10 @@ import React from 'react'
 import { Autoplay, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Image } from '@nextui-org/react'
+import {useNavigate} from "react-router-dom";
 
 export const SwiperComponent = () => {
+    const navigate=useNavigate()
   return (
     <>
       <div className='px-8'>
@@ -30,49 +32,24 @@ export const SwiperComponent = () => {
         >
           <SwiperSlide className='py-8'>
             <Image
-              src='https://picsum.photos/id/1/5000/3333'
+                onClick={()=>navigate('/dashboard')}
+              src='https://images.unsplash.com/photo-1529690086133-c8e4bc9e1f6a?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTR8fHxlbnwwfHx8fHw%3D'
               alt=''
               isZoomed={true}
             />
           </SwiperSlide>
           <SwiperSlide className='py-8'>
             <Image
-              src='https://picsum.photos/id/2/5000/3333'
+                onClick={()=>navigate('/dashboard')}
+              src='https://images.pexels.com/photos/54108/peacock-bird-spring-animal-54108.jpeg?auto=compress&cs=tinysrgb&w=500&h=500'
               alt=''
               isZoomed={true}
             />
           </SwiperSlide>
           <SwiperSlide className='py-8'>
             <Image
-              src='https://picsum.photos/id/3/5000/3333'
-              alt=''
-              isZoomed={true}
-            />
-          </SwiperSlide>
-          <SwiperSlide className='py-8'>
-            <Image
-              src='https://picsum.photos/id/4/5000/3333'
-              alt=''
-              isZoomed={true}
-            />
-          </SwiperSlide>
-          <SwiperSlide className='py-8'>
-            <Image
-              src='https://picsum.photos/id/5/5000/3333'
-              alt=''
-              isZoomed={true}
-            />
-          </SwiperSlide>
-          <SwiperSlide className='py-8'>
-            <Image
-              src='https://picsum.photos/id/6/5000/3333'
-              alt=''
-              isZoomed={true}
-            />
-          </SwiperSlide>
-          <SwiperSlide className='py-8'>
-            <Image
-              src='https://picsum.photos/id/7/5000/3333'
+                onClick={()=>navigate('/dashboard')}
+              src='https://i.pinimg.com/736x/80/8c/a9/808ca986b05ef04a969f1d0395b56a3e.jpg'
               alt=''
               isZoomed={true}
             />

@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
-import firebaseApp from './firebase';
+import firebaseApp, {setLocalData} from './firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import {  getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, orderBy ,onSnapshot} from "firebase/firestore";
 import {authApi} from "../api/auth";
+import {toast} from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -37,11 +38,28 @@ const ContextProvider = ({ children }) => {
                 // ...
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // ..
+                toast.error(error.message)
+                if (error.code === "auth/email-already-in-use") {
+                    toast.error("Email already exist");
+                }
             });
     }
+    const logoutUser = () => {
+        return new Promise((resolve, reject) => {
+            auth.signOut()
+                .then(() => {
+                    // Clear user data from local storage or state if necessary
+                    setUserData(null); // Clear user data from state
+                    // Clear user data from local storage
+                    localStorage.removeItem('user');
+                    // window.location.href = "/login";
+                    resolve();
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    };
 
     const loginUser = (creds) => {
         const { email, password } = creds;
@@ -52,17 +70,38 @@ const ContextProvider = ({ children }) => {
                     const user = userCredential.user;
                     const docref = doc(db, "users", user.uid)
                     const userDetail = await getDoc(docref)
+                    setLocalData('user',userDetail.data())
+                    window.location.href = "/dashboard";
                     console.log(userDetail.data(),'.........');
                     setUserData(userDetail.data())
+                    return userDetail
                     // res(userDetail.data())
 
-                    const data = await authApi.login(creds)
-                    console.log(data,"db data")
+                    // const data = await authApi.login(creds)
+                    // console.log(data,"db data")
                     // window.localStorage.set('userData',data.)
                     // ...
                 })
                 .catch((error) => {
+                    console.log('login user',error)
                     const errorCode = error.code;
+                    console.log(error.code);
+                    if (error.code === "auth/wrong-password") {
+                        toast.error("Incorrect password");
+                    }
+                    if (error.code === "auth/email-already-in-use") {
+                        toast.error("Email address is already registered");
+                    }
+                    if (error.code === "auth/user-not-found") {
+                        toast.error("Email address does not exist");
+                    }
+                    if (error.code === "auth/too-many-requests") {
+                        toast.error("Too many login attempts, please try again after some time");
+                    }
+                    if (error.code === "auth/invalid-credential") {
+                        toast.error("Invalid credentials");
+                    }
+                    console.log(error.code)
                     const errorMessage = error.message;
                     rej(error)
                 });
@@ -156,7 +195,7 @@ const ContextProvider = ({ children }) => {
 
     return (
         <>
-            <AuthContext.Provider value={{ registerUser, loginUser, userData, getUserWithName, sendMessages, getListofMessages }}>
+            <AuthContext.Provider value={{ registerUser, loginUser, userData, getUserWithName, sendMessages, getListofMessages,logoutUser }}>
                 {
                     children
                 }

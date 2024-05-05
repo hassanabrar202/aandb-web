@@ -15,7 +15,9 @@ import { LuBird } from 'react-icons/lu'
 import { OurTeam } from './home/OurTeam'
 import { Testimonials } from './home/Testimonials'
 import { SwiperComponent } from './home/Swiper'
+import {useNavigate} from "react-router-dom";
 const Home = () => {
+  const navigate=useNavigate()
   const browserCategories = [
     {
       id: 0,
@@ -131,9 +133,10 @@ const Home = () => {
           </h1>
           <div className='flex flex-wrap justify-center items-center '>
             {browserCategories.map((data) => (
-                <div key={data.id} className='w-1/2 md:w-1/4 my-12 text-center'>
+                <div key={data.id} className='w-1/2 md:w-1/4 my-12 text-center cursor-pointer'>
                   <div>
                     <div
+                        onClick={()=>navigate('/dashboard')}
                         className='inline-block bg-gray-900 w-max text-white text-3xl align-middle justify-center items-center rounded-md p-4'>
                       {data.icons}
                     </div>
@@ -145,34 +148,34 @@ const Home = () => {
           </div>
         </div>
 
-        <Testimonials/>
+        {/*<Testimonials/>*/}
 
-        <div className='py-8'>
-          <Card
-              isBlurred={true}
-              className='mx-8 h-max bg-cover bg-no-repeat'
-              style={{
-                backgroundImage: `url(real-estate-background.jpg)`,
-              }}
-          >
-            <div className='mx-auto max-w-2xl px-8 sm:py-48 lg:px-0 text-center'>
-              <h1 className='bg-white rounded-2xl py-2 bg-clip-text text-transparent text-4xl font-bold tracking-tight sm:text-6xl'>
-                Skip the small hassels. Step seamlessly into your new space
-              </h1>
-              <p className='hidden sm:block bg-neutral-950/75 rounded-2xl py-2 text-white mt-6 text-lg leading-8'>
-                Drop your mail and our team will hit you in a while
-              </p>
-              <form>
-                <Input
-                    type='email'
-                    label='Email'
-                    placeholder='Enter your email'
-                    variant='flat'
-                />
-              </form>
-            </div>
-          </Card>
-        </div>
+        {/*<div className='py-8'>*/}
+        {/*  <Card*/}
+        {/*      isBlurred={true}*/}
+        {/*      className='mx-8 h-max bg-cover bg-no-repeat'*/}
+        {/*      style={{*/}
+        {/*        backgroundImage: `url(real-estate-background.jpg)`,*/}
+        {/*      }}*/}
+        {/*  >*/}
+        {/*    <div className='mx-auto max-w-2xl px-8 sm:py-48 lg:px-0 text-center'>*/}
+        {/*      <h1 className='bg-white rounded-2xl py-2 bg-clip-text text-transparent text-4xl font-bold tracking-tight sm:text-6xl'>*/}
+        {/*        Skip the small hassels. Step seamlessly into your new space*/}
+        {/*      </h1>*/}
+        {/*      <p className='hidden sm:block bg-neutral-950/75 rounded-2xl py-2 text-white mt-6 text-lg leading-8'>*/}
+        {/*        Drop your mail and our team will hit you in a while*/}
+        {/*      </p>*/}
+        {/*      <form>*/}
+        {/*        <Input*/}
+        {/*            type='email'*/}
+        {/*            label='Email'*/}
+        {/*            placeholder='Enter your email'*/}
+        {/*            variant='flat'*/}
+        {/*        />*/}
+        {/*      </form>*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</div>*/}
 
         <OurTeam/>
 

@@ -10,9 +10,13 @@ import {
   NavbarMenuToggle,
 } from '@nextui-org/react'
 import { GiKiwiBird } from 'react-icons/gi'
-import React, { useState } from 'react'
+import React, {useContext, useState} from 'react'
+import {getLocalData} from "../utils/firebase";
+import {AuthContext} from "../utils/ContextProvider";
 
 export const NavbarComponent = ({ currentPath }) => {
+  const user=getLocalData('user')
+  const { logoutUser, registerUser,userData } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuItems = ['Home', 'Ads', 'Profile', 'Logout']
   return (
@@ -74,16 +78,15 @@ export const NavbarComponent = ({ currentPath }) => {
               Sold Pets
             </Button>
           </NavbarItem>
-          {(currentPath === '/' || currentPath === '/signup') && (
-            <NavbarItem>
-              <Link href='/login'>
-                <Button color='primary' variant='solid'>
+
+          {(currentPath === '/' || currentPath === '/signup') && !user && (
+              <NavbarItem>
+                <Button onClick={logoutUser} color='primary' variant='solid'>
                   Login
                 </Button>
-              </Link>
             </NavbarItem>
           )}
-          {currentPath === '/login' && (
+          {currentPath === '/login' &&!user&& (
             <NavbarItem>
               <Link href='/signup'>
                 <Button color='primary' variant='solid'>
@@ -92,6 +95,19 @@ export const NavbarComponent = ({ currentPath }) => {
               </Link>
             </NavbarItem>
           )}
+          {userData&& (
+            <NavbarItem>
+              <Link href='/login'>
+                <Button color='primary' variant='solid'>
+                  Log out
+                </Button>
+              </Link>
+            </NavbarItem>
+          )}
+          {userData && <NavbarItem>
+            <img className="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                 alt="Default avatar"/>
+          </NavbarItem>}
         </NavbarContent>
         <NavbarMenu className='pt-12'>
           {menuItems.map((item, index) => (
