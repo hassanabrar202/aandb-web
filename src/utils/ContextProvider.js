@@ -32,7 +32,7 @@ const ContextProvider = ({ children }) => {
                     createdAt: (new Date()).getDate()
                 })
 
-                const data = authApi.register(creds)
+                const data = await authApi.register(creds)
                 console.log(data,"db data")
                 // ...
             })
@@ -52,12 +52,13 @@ const ContextProvider = ({ children }) => {
                     const user = userCredential.user;
                     const docref = doc(db, "users", user.uid)
                     const userDetail = await getDoc(docref)
-                    console.log(userDetail.data());
+                    console.log(userDetail.data(),'.........');
                     setUserData(userDetail.data())
-                    res(userDetail.data())
+                    // res(userDetail.data())
 
-                    const data = authApi.login(creds)
+                    const data = await authApi.login(creds)
                     console.log(data,"db data")
+                    // window.localStorage.set('userData',data.)
                     // ...
                 })
                 .catch((error) => {
@@ -93,9 +94,10 @@ const ContextProvider = ({ children }) => {
             console.log(usersDoc, 'user docs')
             let users = [];
             usersDoc.forEach(element => {
-                console.log(element.data());
+                // console.log(element.data());
                 users.push(element.data())
             });
+            console.log(users, 'users')
             res(users)
         })
     }

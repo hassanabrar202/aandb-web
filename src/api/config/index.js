@@ -38,7 +38,7 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
     async (err) => {
       const originalConfig = err.config;
 
-      if (!originalConfig.url.startsWith('/auth/login') && err.response) {
+      if (!originalConfig.url.startsWith('/auth') && err.response) {
         if (err.response.status === 401 && !originalConfig._retry) {
           originalConfig._retry = true;
 
