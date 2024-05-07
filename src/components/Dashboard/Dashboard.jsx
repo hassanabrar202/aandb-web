@@ -1,21 +1,63 @@
 import { Card, Input, Button } from '@nextui-org/react'
 import React, { useEffect, useState } from 'react'
 import Birds from './Birds/Birds'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { productApi } from '../../api/product'
+const tabs = [
+  {
+    label: 'All Categories',
+    key: 'all',
+    to: 'http://localhost:3000/dashboard?tab=all',
+  },
+  {
+    label: 'A&B self stock',
+    key: 'self',
+    to: 'http://localhost:3000/dashboard?tab=self',
+  },
+  {
+    label: 'Live Stock',
+    key: 'live',
+    to: 'http://localhost:3000/dashboard?tab=live',
+  },
+  {
+    label: 'Birds',
+    key: 'bird',
+    to: 'http://localhost:3000/dashboard?tab=bird',
+  },
+]
+const selfTabs = [
+  {
+    label: 'All Ads',
+    key: 'all',
+    to: 'http://localhost:3000/dashboard?tab=all',
+  },
+  {
+    label: 'My Ads',
+    key: 'my',
+    to: 'http://localhost:3000/dashboard?tab=my',
+  },
+]
 
 const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState()
+  const [selfActiveTab, setSelfActiveTab] = useState()
+  const [search] = useSearchParams('tab=all')
+  const [selfSearch] = useSearchParams('tab=all')
   const navigate = useNavigate()
   const [data, setData] = useState([])
   const [selectedOption, setSelectedOption] = useState(null)
   const [searchName, setSearchName] = useState('')
   const getData = async () => {
-    const data = await productApi.get()
+    const data = await productApi.get(search.get('tab'), 'test@gmail.com')
     setData(data.data)
   }
   useEffect(() => {
     getData()
   }, [])
+  useEffect(() => {
+    setActiveTab(search.get('tab') || 'all')
+    setSelfActiveTab(selfSearch.get('tab') || 'all')
+  }, [search.get('tab')])
 
   const [filteredBirds, setFilteredBirds] = useState(data.data)
 
@@ -50,23 +92,19 @@ const Dashboard = () => {
     <div className='max-w-[1500px] m-auto py-20'>
       <div className='flex w-full justify-end item-center pb-10'>
         <ul className='flex w-max flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400'>
-          <li className='me-2'>
-            <a
-              href='#'
-              aria-current='page'
-              className='inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500'
-            >
-              All Ads
-            </a>
-          </li>
-          <li className='me-2'>
-            <a
-              href='#'
-              className='inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300'
-            >
-              My Ads
-            </a>
-          </li>
+          {selfTabs.map((tab) => (
+            <li key={tab.key} className='me-2'>
+              <a
+                href={tab.to}
+                aria-current='page'
+                className={`
+                inline-block p-4 rounded-t-lg ${selfActiveTab === tab.key ? 'text-blue-600 bg-gray-100' : ''}
+              `}
+              >
+                {tab.label}
+              </a>
+            </li>
+          ))}
           <li>
             <Button
               onClick={() => navigate('/ad-create')}
@@ -78,46 +116,30 @@ const Dashboard = () => {
           </li>
         </ul>
       </div>
-      <ul className='flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400'>
-        <li className='me-2'>
-          <a
-            href='#'
-            aria-current='page'
-            className='inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500'
-          >
-            All Categories
-          </a>
-        </li>
-        <li className='me-2'>
-          <a
-            href='#'
-            className='inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300'
-          >
-            A&B self stock
-          </a>
-        </li>
-        <li className='me-2'>
-          <a
-            href='#'
-            className='inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300'
-          >
-            Live Stock
-          </a>
-        </li>
-        <li className='me-2'>
-          <a
-            href='#'
-            className='inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300'
-          >
-            Birds
-          </a>
-        </li>
-        <li>
-          <a className='inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500'>
-            Coming Soon
-          </a>
-        </li>
-      </ul>
+      {selfActiveTab !== 'my' ? (
+        <ul className='flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400'>
+          {tabs.map((tab) => (
+            <li key={tab.key} className='me-2'>
+              <a
+                href={tab.to}
+                aria-current='page'
+                className={`
+                inline-block p-4 rounded-t-lg ${activeTab === tab.key ? 'text-blue-600 bg-gray-100' : ''}
+              `}
+              >
+                {tab.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a className='inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500'>
+              Coming Soon
+            </a>
+          </li>
+        </ul>
+      ) : (
+        <></>
+      )}
       <div className='py-6'>
         <div className='flex item-center  gap-4'>
           <input
