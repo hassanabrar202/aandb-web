@@ -81,9 +81,12 @@ export const NavbarComponent = ({ currentPath }) => {
 
           {(currentPath === '/' || currentPath === '/signup') && !user && (
               <NavbarItem>
+                <Link href='/login'>
                 <Button onClick={logoutUser} color='primary' variant='solid'>
                   Login
                 </Button>
+                </Link>
+
             </NavbarItem>
           )}
           {currentPath === '/login' &&!user&& (
