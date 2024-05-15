@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { create } from 'apisauce';
 import * as interceptors from './interceptors';
 
 /**
  * Web api confgiration
  */
 export const webApi = ({ auth, req, res, asset } = {}) => {
-  console.log(process.env.REACT_APP_API_BASE_URL,"envvv")
+  try {
   const baseApi = axios.create({
     baseURL: asset ? '' : process.env.REACT_APP_API_BASE_URL,
     responseType: asset ? 'blob' : false,
@@ -18,6 +17,8 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
       'Content-Type': 'application/json'
     }
   });
+
+
 
   baseApi.interceptors.request.use(
     (config) => {
@@ -30,6 +31,9 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
     },
     (error) => Promise.reject(error)
   );
+
+    console.log(process.env.REACT_APP_API_BASE_URL,"envvv")
+
 
   baseApi.interceptors.response.use(
     (res) => {
@@ -59,10 +63,14 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
     }
   );
 
-  axiosRetry(baseApi, { retryDelay: axiosRetry.exponentialDelay });
+    console.log(process.env.REACT_APP_API_BASE_URL,"envvv2")
 
-  return create({
-    axiosInstance: baseApi,
-    timeout: 20000
-  });
+
+  axiosRetry(baseApi, { retryDelay: axiosRetry.exponentialDelay });
+    console.log(process.env.REACT_APP_API_BASE_URL,"envvv3")
+    return  baseApi
+}
+catch (e) {
+  console.log(e,'hello')
+}
 };
