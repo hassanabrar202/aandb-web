@@ -11,14 +11,22 @@ import {
 } from '@nextui-org/react'
 import { GiKiwiBird } from 'react-icons/gi'
 import React, {useContext, useState} from 'react'
-import {getLocalData} from "../utils/firebase";
 import {AuthContext} from "../utils/ContextProvider";
 
 export const NavbarComponent = ({ currentPath }) => {
-  const user=getLocalData('user')
-  const { logoutUser, registerUser,userData } = useContext(AuthContext)
+  const { logoutUser } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuItems = ['Home', 'Ads', 'Profile', 'Logout']
+
+  const handleLogout = async (e) => {
+    try {
+      e.preventDefault();
+      await logoutUser()
+    } catch (error) {
+      console.error('Login error:', error)
+    }
+  }
+
   return (
     <>
       <Navbar
@@ -78,59 +86,79 @@ export const NavbarComponent = ({ currentPath }) => {
               Sold Pets
             </Button>
           </NavbarItem>
-
-          {(currentPath === '/' || currentPath === '/signup') && !user && (
-              <NavbarItem>
-                <Link href='/login'>
-                <Button onClick={logoutUser} color='primary' variant='solid'>
-                  Login
-                </Button>
-                </Link>
-
-            </NavbarItem>
-          )}
-          {currentPath === '/login' &&!user&& (
             <NavbarItem>
-              <Link href='/signup'>
-                <Button color='primary' variant='solid'>
-                  Sign Up
-                </Button>
-              </Link>
-            </NavbarItem>
-          )}
-          {userData&& (
-            <NavbarItem>
-              <Link href='/login'>
-                <Button color='primary' variant='solid'>
+              <Link >
+                <Button color='primary' variant='solid' onClick={handleLogout}>
                   Log out
                 </Button>
               </Link>
             </NavbarItem>
-          )}
-          {userData && <NavbarItem>
+        <NavbarItem>
             <img className="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                  alt="Default avatar"/>
-          </NavbarItem>}
+          </NavbarItem>
         </NavbarContent>
         <NavbarMenu className='pt-12'>
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? 'primary'
-                    : index === menuItems.length - 1
-                      ? 'danger'
-                      : 'foreground'
-                }
-                className='w-full'
-                href='#'
+          <NavbarMenuItem>
+            <Link
+                color='primary'
+                href='/'
+                aria-current='page'
+                className='text-inherit w-full'
                 size='lg'
-              >
-                {item}
-              </Link>
-            </NavbarMenuItem>
-          ))}
+
+            >
+              Home
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <Link
+                color='primary'
+                href='/dashboard'
+                aria-current='page'
+                className='text-inherit w-full'
+                size='lg'
+
+            >
+              Ads
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem >
+            <Link
+                color='primary'
+                href='/chat'
+                aria-current='page'
+                className='text-inherit w-full'
+                size='lg'
+
+            >
+              Chat
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <Link
+                color='primary'
+                href='/dashboard'
+                aria-current='page'
+                className='text-inherit w-full'
+                size='lg'
+
+            >
+              Profile
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <Link
+                color='danger'
+                aria-current='page'
+                className='text-inherit w-full'
+                size='lg'
+            >
+              <Button color='primary' variant='solid' onClick={handleLogout}>
+                Log out
+              </Button>
+            </Link>
+          </NavbarMenuItem>
         </NavbarMenu>
       </Navbar>
     </>

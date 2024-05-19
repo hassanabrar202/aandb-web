@@ -19,7 +19,6 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
   });
 
 
-
   baseApi.interceptors.request.use(
     (config) => {
       const accessToken = window.localStorage.getItem('accessToken');
@@ -32,7 +31,6 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
     (error) => Promise.reject(error)
   );
 
-    console.log(process.env.REACT_APP_API_BASE_URL,"envvv")
 
 
   baseApi.interceptors.response.use(
@@ -50,6 +48,7 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
             const refreshToken = window.localStorage.getItem('refreshToken');
             const { data } = await baseApi.post('/auth/refresh/', { refresh: refreshToken });
             const { access, refresh } = data;
+            console.log(access,refresh,'access and refresh token')
             window.localStorage.setItem('accessToken', access);
             window.localStorage.setItem('refreshToken', refresh);
             return baseApi(originalConfig);

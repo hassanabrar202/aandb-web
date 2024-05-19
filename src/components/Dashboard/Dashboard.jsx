@@ -5,12 +5,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { productApi } from '../../api/product'
 const tabs = [
   {
-    label: 'All Categories',
+    label: 'All Pets',
     key: 'all',
     to: 'http://localhost:3000/dashboard?tab=all',
   },
   {
-    label: 'A&B self stock',
+    label: 'A&B Own Pets',
     key: 'self',
     to: 'http://localhost:3000/dashboard?tab=self',
   },

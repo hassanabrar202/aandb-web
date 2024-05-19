@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react';
-import firebaseApp, {setLocalData} from './firebase';
+import firebaseApp from './firebase';
+import {removeLocalData, setLocalData} from './utils'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import {  getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, orderBy ,onSnapshot} from "firebase/firestore";
 import {authApi} from "../api/auth";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -15,7 +17,6 @@ const ContextProvider = ({ children }) => {
     const db = getFirestore(firebaseApp);
 
     const [userData, setUserData] = useState(null)
-    const [dbUserData , setDbUserData] = useState(null)
 
     const registerUser = (creds) => {
         const { email, password, firstname, lastname,username } = creds;
@@ -32,10 +33,8 @@ const ContextProvider = ({ children }) => {
                     address: "",
                     createdAt: (new Date()).getDate()
                 })
-
                 const data = await authApi.register(creds)
-                console.log(data,"db data")
-                // ...
+                return data
             })
             .catch((error) => {
                 toast.error(error.message)
@@ -48,11 +47,12 @@ const ContextProvider = ({ children }) => {
         return new Promise((resolve, reject) => {
             auth.signOut()
                 .then(() => {
-                    // Clear user data from local storage or state if necessary
-                    setUserData(null); // Clear user data from state
-                    // Clear user data from local storage
-                    localStorage.removeItem('user');
-                    // window.location.href = "/login";
+                    setUserData(null);
+                    removeLocalData('dbUser')
+                    removeLocalData('firebaseUser')
+                    removeLocalData('accessToken')
+                    removeLocalData('refreshToken')
+                    window.location.href = '/'
                     resolve();
                 })
                 .catch((error) => {
@@ -66,21 +66,17 @@ const ContextProvider = ({ children }) => {
         return new Promise((res, rej)=>{
             signInWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
-                    // Signed in
                     const user = userCredential.user;
                     const docref = doc(db, "users", user.uid)
                     const userDetail = await getDoc(docref)
-                    setLocalData('user',userDetail.data())
-                    window.location.href = "/dashboard";
-                    console.log(userDetail.data(),'.........');
                     setUserData(userDetail.data())
-                    return userDetail
-                    // res(userDetail.data())
-
-                    // const data = await authApi.login(creds)
-                    // console.log(data,"db data")
-                    // window.localStorage.set('userData',data.)
-                    // ...
+                    const data = await authApi.login(creds)
+                    setLocalData('dbUser',data.data.user)
+                    setLocalData('firebaseUser',userDetail.data())
+                    setLocalData('accessToken',data.data.accessToken)
+                    setLocalData('refreshToken',data.data.refreshToken)
+                    window.location.href = "/dashboard";
+                    console.log(data,'data')
                 })
                 .catch((error) => {
                     console.log('login user',error)
@@ -192,6 +188,9 @@ const ContextProvider = ({ children }) => {
         // Return the unsubscribe function to stop listening for updates when needed
         return unsubscribe;
     };
+
+
+
 
     return (
         <>

@@ -1,21 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../utils/ContextProvider'
-import { Button, Card, CardBody, Input } from '@nextui-org/react'
-import {setLocalData} from "../utils/firebase";
 
 const Login = () => {
-  const navigate = useNavigate()
-  const { loginUser, registerUser ,userData} = useContext(AuthContext)
+  const { loginUser} = useContext(AuthContext)
   const [credentials, setCredentials] = useState({ email: '', password: '' })
 
   const handleLogin = async (e) => {
     try {
       e.preventDefault();
-      const userData = await loginUser(credentials)
-      setLocalData('user',userData)
-      console.log('User logged in:', userData)
-      navigate('/dashboard')
+      await loginUser(credentials)
     } catch (error) {
       console.error('Login error:', error)
     }
