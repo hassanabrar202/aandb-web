@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Birds from './Birds/Birds'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { productApi } from '../../api/product'
+import {getLocalData} from "../../utils/utils";
 const tabs = [
   {
     label: 'All Pets',
@@ -16,7 +17,7 @@ const tabs = [
   },
   {
     label: 'Live Stock',
-    key: 'live',
+    key: 'livestock',
     to: 'http://localhost:3000/dashboard?tab=live',
   },
   {
@@ -48,7 +49,12 @@ const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState(null)
   const [searchName, setSearchName] = useState('')
   const getData = async () => {
-    const data = await productApi.get(search.get('tab'), 'test@gmail.com')
+    const data = await productApi.getByCategory({
+      limit:10,
+      offset:0,
+      category: search.get('tab'),
+      email: getLocalData('dbUser').email
+    })
     setData(data.data)
   }
   useEffect(() => {

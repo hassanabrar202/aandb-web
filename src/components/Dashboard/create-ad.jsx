@@ -36,15 +36,6 @@ const CreateAd = () => {
                 description,
                 category,
                 price,
-                userDetails: {
-                    // Assuming userDetails is an object containing username, email, phone, address, city, and country
-                    username: "awais", // Add the username value here
-                    email: "test@gmail.com", // Add the email value here
-                    phone: "03221491133", // Add the phone value here
-                    address: "scsadsa", // Add the address value here
-                    city: "sdsfs", // Add dthe city value here
-                    country: "sdsfdsf", // Add the country value here
-                }
             })
             console.log(response)
             toast.success("Ad created successfully")
@@ -100,7 +91,7 @@ const CreateAd = () => {
                                     >
                                         <option value="">Choose a category</option>
                                         <option value="bird">Bird</option>
-                                        <option value="live_stock">Live Stock</option>
+                                        <option value="livestock">Live Stock</option>
                                     </select>
                                 </div>
                                 <div className="md:col-span-5">

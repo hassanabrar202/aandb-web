@@ -2,16 +2,19 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import * as interceptors from './interceptors';
+import {getLocalData, setLocalData} from "../../utils/utils";
 
 /**
  * Web api confgiration
  */
-export const webApi = ({ auth, req, res, asset } = {}) => {
+export const webApi = (data={ auth : false}) => {
   try {
+
+    console.log(data)
+
   const baseApi = axios.create({
-    baseURL: asset ? '' : process.env.REACT_APP_API_BASE_URL,
-    responseType: asset ? 'blob' : false,
-    useAuth: auth,
+    baseURL:  process.env.REACT_APP_API_BASE_URL,
+    useAuth: data.auth,
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json'
@@ -21,7 +24,7 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
 
   baseApi.interceptors.request.use(
     (config) => {
-      const accessToken = window.localStorage.getItem('accessToken');
+      const accessToken = getLocalData('accessToken');
       if (config.useAuth) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
       }
@@ -45,12 +48,12 @@ export const webApi = ({ auth, req, res, asset } = {}) => {
           originalConfig._retry = true;
 
           try {
-            const refreshToken = window.localStorage.getItem('refreshToken');
+            const refreshToken = getLocalData('refreshToken');
             const { data } = await baseApi.post('/auth/refresh/', { refresh: refreshToken });
             const { access, refresh } = data;
             console.log(access,refresh,'access and refresh token')
-            window.localStorage.setItem('accessToken', access);
-            window.localStorage.setItem('refreshToken', refresh);
+            setLocalData('accessToken', access);
+            setLocalData('refreshToken', refresh);
             return baseApi(originalConfig);
           } catch (_error) {
             return Promise.reject(_error);
