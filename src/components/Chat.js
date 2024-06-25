@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../utils/ContextProvider';
+import {getLocalData} from "../utils/utils";
 
 const Chat = () => {
-    const { getUserWithName, userData, sendMessages, getListofMessages } = useContext(AuthContext);
+    const { getUserWithName, userData, sendMessages, getListofMessages,getAllUsers } = useContext(AuthContext);
     const [name, setName] = useState(null);
     const [allUsers, setAllUsers] = useState(null);
     const [receiver, setReceiver] = useState(null);
     const [inputChange, setInputChange] = useState('');
     const [chats, setChats] = useState([]);
 
+    const firebaseUser = getLocalData('firebaseUser')
     useEffect(() => {
         if (receiver?.user_id) {
             const unsubscribe = getListofMessages(receiver.user_id, updateMessages);
@@ -21,21 +23,30 @@ const Chat = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const allUsers = await getAllUsers();
+                console.log(allUsers,'hello all users')
                 const data = await getUserWithName('hassan');
                 console.log(data,userData);
                 if (data?.length) {
-                    setAllUsers(data.filter((usr) => usr.email !== userData.email));
+                    const filteredUsers =allUsers.filter((usr) => usr.email !== firebaseUser.email)
+                    setAllUsers(filteredUsers);
+                    handleSetReceiver(filteredUsers[0])
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
         };
 
+
         fetchData();
     }, []);
 
     const updateMessages = (messages) => {
-        setChats(messages);
+        const updatedMessages = messages.map(message => ({
+            ...message,
+            sender: message.member1 === firebaseUser.user_id ? true : false  // Adjust based on your data structure
+        }));
+        setChats(updatedMessages);
     };
 
     const handleChangeInput = async (value) => {
@@ -62,7 +73,7 @@ const Chat = () => {
         setChats([...chats, { message: inputChange, sender: true }]);
     };
 
-    console.log("al users",allUsers)
+    console.log("all users",allUsers)
 
     return (
         <>
@@ -98,19 +109,17 @@ const Chat = () => {
 
                 <div className="flex-1">
                     <header className="bg-white p-4 text-gray-700">
-                        <h1 className="text-2x  l font-semibold">{receiver?.name || 'Select a user'}</h1>
+                        <h1 className="text-2xl font-semibold">{receiver?.name || 'Select a user'}</h1>
                     </header>
 
                     <div className="h-screen overflow-y-auto p-4 pb-36">
                         {chats.map((chat, index) => (
                             <div
                                 key={index}
-                                className={`flex mb-4 ${chat.sender ? 'justify-end' : ''} cursor-pointer`}
+                                className={`flex mb-4 ${chat.sender ? 'justify-end' : 'justify-start'}`}
                             >
                                 <div
-                                    className={`flex max-w-96 ${
-                                        chat.sender ? 'bg-indigo-500 text-white rounded-lg' : 'bg-white rounded-lg'
-                                    } p-3 gap-3`}
+                                    className={`flex max-w-96 ${chat.sender ? 'bg-indigo-500 text-white rounded-lg' : 'bg-white text-black rounded-lg'} p-3 gap-3`}
                                 >
                                     <p>{chat.message}</p>
                                 </div>

@@ -120,11 +120,27 @@ const ContextProvider = ({ children }) => {
         });
     },[])
 
-    const getUserWithName = async (name) => {
+     const getUserWithName = async (name) => {
         return new Promise(async (res, rej)=>{
             const userRef = collection(db, "users");
             console.log(name,"name")
                 // , where("name","==",name)
+            const usersDoc = await getDocs(query(userRef));
+            console.log(usersDoc, 'user docs')
+            let users = [];
+            usersDoc.forEach(element => {
+                // console.log(element.data());
+                users.push(element.data())
+            });
+            console.log(users, 'users')
+            res(users)
+        })
+    }
+
+     const getAllUsers = async () => {
+        return new Promise(async (res, rej)=>{
+            const userRef = collection(db, "users");
+            // , where("name","==",name)
             const usersDoc = await getDocs(query(userRef));
             console.log(usersDoc, 'user docs')
             let users = [];
@@ -182,6 +198,7 @@ const ContextProvider = ({ children }) => {
 
         const unsubscribe = onSnapshot(messageRef, (snapshot) => {
             const data = snapshot.docs.map((message) => message.data());
+            console.log(data,'data of reviever')
             updateCallback(data);
         });
 
@@ -194,7 +211,7 @@ const ContextProvider = ({ children }) => {
 
     return (
         <>
-            <AuthContext.Provider value={{ registerUser, loginUser, userData, getUserWithName, sendMessages, getListofMessages,logoutUser }}>
+            <AuthContext.Provider value={{ registerUser, loginUser, userData, getUserWithName, sendMessages, getListofMessages,logoutUser, getAllUsers }}>
                 {
                     children
                 }
