@@ -81,11 +81,11 @@ export const NavbarComponent = ({ currentPath }) => {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent className='hidden sm:flex sm:flex-row' justify='end'>
-          <NavbarItem>
-            <Button color='primary' variant='solid'>
-              Sold Pets
-            </Button>
-          </NavbarItem>
+          {/*<NavbarItem>*/}
+          {/*  <Button color='primary' variant='solid'>*/}
+          {/*    Sold Pets*/}
+          {/*  </Button>*/}
+          {/*</NavbarItem>*/}
             <NavbarItem>
               <Link >
                 <Button color='primary' variant='solid' onClick={handleLogout}>

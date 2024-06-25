@@ -9,9 +9,6 @@ import {getLocalData, setLocalData} from "../../utils/utils";
  */
 export const webApi = (data={ auth : false}) => {
   try {
-
-    console.log(data)
-
   const baseApi = axios.create({
     baseURL:  process.env.REACT_APP_API_BASE_URL,
     useAuth: data.auth,
