@@ -82,11 +82,11 @@ function App() {
           element: <CreateAd />,
         },
         {
-          path: '/details',
+          path: '/details/:id?',
           element: <ProductDetails />,
         },
         {
-          path: '/chat',
+          path: '/chat/:uname?',
           element: <Chat />,
         },
         {

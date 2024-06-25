@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { productApi } from "../../api/product";
+import {Link, useParams} from "react-router-dom";
+import {getLocalData} from "../../utils/utils";
 
 const ProductDetails = () => {
     const [data, setData] = useState(null);
+    const { id } = useParams();
+
 
     const getData = async () => {
         try {
-            const response = await productApi.getById('667a814128474d57393ead61');
+            const response = await productApi.getById(id);
             console.log(response)
             setData(response.data.data);
         } catch (error) {
@@ -52,12 +56,16 @@ const ProductDetails = () => {
                                     </h4>
                                 </div>
 
+                                {data.userDetails.username !== getLocalData('dbUser').username && (
                                 <div className="flex flex-wrap gap-4 mt-8">
+                                    <Link to={`/chat/${data.userDetails.username}`}>
                                     <button type="button"
                                             className="min-w-[200px] px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded">
                                         Chat Here
                                     </button>
+                                    </Link>
                                 </div>
+                                    )}
                             </div>
                         </div>
                     </div>

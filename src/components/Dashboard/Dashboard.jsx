@@ -1,7 +1,7 @@
 import { Card, Input, Button } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import Birds from './Birds/Birds';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {Link, useNavigate, useSearchParams} from 'react-router-dom';
 import { productApi } from '../../api/product';
 import { getLocalData } from "../../utils/utils";
 

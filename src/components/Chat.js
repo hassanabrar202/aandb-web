@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../utils/ContextProvider';
 import {getLocalData} from "../utils/utils";
+import {useParams} from "react-router-dom";
 
 const Chat = () => {
     const { getUserWithName, userData, sendMessages, getListofMessages,getAllUsers } = useContext(AuthContext);
@@ -9,6 +10,7 @@ const Chat = () => {
     const [receiver, setReceiver] = useState(null);
     const [inputChange, setInputChange] = useState('');
     const [chats, setChats] = useState([]);
+    const { uname } = useParams();
 
     const firebaseUser = getLocalData('firebaseUser')
     useEffect(() => {
@@ -24,13 +26,17 @@ const Chat = () => {
         const fetchData = async () => {
             try {
                 const allUsers = await getAllUsers();
-                console.log(allUsers,'hello all users')
-                const data = await getUserWithName('hassan');
-                console.log(data,userData);
-                if (data?.length) {
+                if (allUsers?.length) {
                     const filteredUsers =allUsers.filter((usr) => usr.email !== firebaseUser.email)
                     setAllUsers(filteredUsers);
-                    handleSetReceiver(filteredUsers[0])
+                    if(uname)
+                    {
+                        const data = filteredUsers.filter((usr)=> usr.name === uname);
+                        handleSetReceiver(data[0])
+                    }
+                    else {
+                        handleSetReceiver(filteredUsers[0])
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
