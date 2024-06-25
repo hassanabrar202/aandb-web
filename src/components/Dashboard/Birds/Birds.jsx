@@ -8,9 +8,10 @@ const Birds = ({ birds }) => {
       {birds?.map((bird, index) => (
         <Card key={bird?.id} shadow style={{ width: '300px' }} className='m-4'>
           <img
-            src={'https://via.placeholder.com/300'}
+            src={bird?.image || 'https://via.placeholder.com/300' }
             alt={bird?.name}
             className='w-full h-48 object-cover'
+            placeholder={'https://via.placeholder.com/300'}
           />
           <div className='p-4'>
             <h2 className='text-xl font-semibold mb-2'>{bird?.name}</h2>

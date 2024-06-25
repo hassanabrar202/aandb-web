@@ -7,11 +7,12 @@ import {getLocalData, setLocalData} from "../../utils/utils";
 /**
  * Web api confgiration
  */
-export const webApi = (data={ auth : false}) => {
+export const webApi = (data={ auth : false,formData: false}) => {
   try {
   const baseApi = axios.create({
     baseURL:  process.env.REACT_APP_API_BASE_URL,
     useAuth: data.auth,
+    formData: data.formData,
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json'
@@ -25,7 +26,9 @@ export const webApi = (data={ auth : false}) => {
       if (config.useAuth) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
       }
-      config = interceptors.uploadRequest(baseApi, config);
+      if(config.formData){
+        config.headers['Content-Type'] = 'multipart/form-data';
+      }
       return config;
     },
     (error) => Promise.reject(error)

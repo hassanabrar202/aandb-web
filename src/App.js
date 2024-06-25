@@ -12,6 +12,7 @@ import CreateAd from "./components/Dashboard/create-ad";
 import {AdminDashboard} from "./components/admin/dashboard";
 import {getLocalData} from "./utils/utils";
 import {NavbarUnAuthComponent} from "./components/NavbarUnAuth";
+import ProductDetails from "./components/Dashboard/ProductDetails";
 
 function App() {
   const isLogin = getLocalData('dbUser')
@@ -79,6 +80,10 @@ function App() {
         {
           path: '/ad-create',
           element: <CreateAd />,
+        },
+        {
+          path: '/details',
+          element: <ProductDetails />,
         },
         {
           path: '/chat',

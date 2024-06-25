@@ -15,7 +15,7 @@ const jsonToFormData = (object) => {
 export const uploadRequest = (_api, config) => {
   if (config.formData === true) {
     config.headers['Content-Type'] = 'multipart/form-data';
-    config.data = jsonToFormData(config.data);
+    // config.data = jsonToFormData(config.data);
   }
   return config;
 };

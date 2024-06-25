@@ -45,6 +45,11 @@ const CreateAd = () => {
         },
     });
 
+    const [image, setImage] = useState(null)
+
+    const [fileName, setFileName] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
+
     // Destructure formData for easier access
     const {
         name,
@@ -106,6 +111,7 @@ const CreateAd = () => {
                     city,
                     country,
                 },
+                image: image,
                 birdDetails: category === "bird" ? birdDetails : undefined,
                 livestockDetails: category === "livestock" ? livestockDetails : undefined,
             });
@@ -122,10 +128,94 @@ const CreateAd = () => {
         }
     };
 
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        if (file) {
+            setFileName(file.name);
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImagePreview(e.target.result);
+            };
+            reader.readAsDataURL(file);
+           const data = await productApi.uploadImage(formData);
+            setImage(data?.data?.data?.image || null)
+        } else {
+            setFileName('');
+            setImagePreview('');
+        }
+    };
+
     return (
         <div className="min-h-screen py-2 bg-gray-100 px-16">
             <div className="min-h-screen bg-white rounded shadow-lg px-4 md:p-8 mb-6">
                 <div className="lg:col-span-2">
+
+                    <section className="container w-full mx-auto items-center">
+                        <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden items-center">
+                            <div className="px-4 py-6">
+                                <div
+                                    id="image-preview"
+                                    className={`max-w-sm p-6 bg-gray-100 ${
+                                        imagePreview ? '' : 'border-dashed border-2 border-gray-400'
+                                    } rounded-lg items-center mx-auto text-center cursor-pointer`}
+                                    onClick={() => {}}
+                                >
+                                    {imagePreview ? (
+                                        <img
+                                            src={imagePreview}
+                                            className="max-h-48 rounded-lg mx-auto"
+                                            alt="Image preview"
+                                        />
+                                    ) : (
+                                        <div>
+                                            <input
+                                                id="upload"
+                                                type="file"
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                            />
+                                            <label htmlFor="upload" className="cursor-pointer">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    strokeWidth="1.5"
+                                                    stroke="currentColor"
+                                                    className="w-8 h-8 text-gray-700 mx-auto mb-4"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                                                    />
+                                                </svg>
+                                                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-700">
+                                                    Upload picture
+                                                </h5>
+                                                <p className="font-normal text-sm text-gray-400 md:px-6">
+                                                    Choose photo size should be less than{' '}
+                                                    <b className="text-gray-600">2mb</b>
+                                                </p>
+                                                <p className="font-normal text-sm text-gray-400 md:px-6">
+                                                    and should be in <b className="text-gray-600">JPG, PNG, or
+                                                    GIF</b> format.
+                                                </p>
+                                                <span id="filename" className="text-gray-500 bg-gray-200 z-50">
+                    {fileName}
+                  </span>
+                                            </label>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div className="md:col-span-5">
                             <label htmlFor="name">Name</label>
@@ -157,7 +247,7 @@ const CreateAd = () => {
                                 className="border mt-1 rounded px-4 w-full"
                                 value={category}
                                 onChange={handleChange}
-                                style={{height:"40px"}}
+                                style={{height: "40px"}}
                             >
                                 <option value="">Choose a category</option>
                                 <option value="bird">Bird</option>
@@ -267,7 +357,7 @@ const CreateAd = () => {
                                     className="border mt-1 rounded px-4 w-full"
                                     value={birdDetails.singingAbility}
                                     onChange={handleChange}
-                                    style={{height:"40px"}}
+                                    style={{height: "40px"}}
                                 >
                                     <option value="">Select singing ability</option>
                                     <option value="excellent">Excellent</option>
@@ -355,7 +445,7 @@ const CreateAd = () => {
                                     className="border mt-1 rounded px-4 w-full"
                                     value={birdDetails.healthCondition}
                                     onChange={handleChange}
-                                    style={{height:"40px"}}
+                                    style={{height: "40px"}}
                                 >
                                     <option value="">Select health condition</option>
                                     <option value="healthy">Healthy</option>
@@ -388,7 +478,7 @@ const CreateAd = () => {
                                     className="border mt-1 rounded px-4 w-full"
                                     value={birdDetails.gender}
                                     onChange={handleChange}
-                                    style={{height:"40px"}}
+                                    style={{height: "40px"}}
                                 >
                                     <option value="">Select gender</option>
                                     <option value="male">Male</option>
@@ -459,7 +549,7 @@ const CreateAd = () => {
                                     className="border mt-1 rounded px-4 w-full"
                                     value={livestockDetails.healthCondition}
                                     onChange={handleChange}
-                                    style={{height:"40px"}}
+                                    style={{height: "40px"}}
                                 >
                                     <option value="">Select health condition</option>
                                     <option value="healthy">Healthy</option>
@@ -490,7 +580,7 @@ const CreateAd = () => {
                                     className="border mt-1 rounded px-4 w-full"
                                     value={livestockDetails.gender}
                                     onChange={handleChange}
-                                    style={{height:"40px"}}
+                                    style={{height: "40px"}}
                                 >
                                     <option value="">Select gender</option>
                                     <option value="male">Male</option>
@@ -513,15 +603,23 @@ const CreateAd = () => {
                         )}
                         <div className="md:col-span-5 text-right">
                             <div className="inline-flex items-end px-6">
-                                <button onClick={() => navigate("/dashboard")} className="border font-bold py-2 px-4 rounded">
+                                <button onClick={() => navigate("/dashboard")}
+                                        className="border font-bold py-2 px-4 rounded">
                                     Cancel
                                 </button>
                             </div>
                             <div className="inline-flex items-end">
-                                <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <button
+                                    onClick={handleSubmit}
+                                    disabled={image == null}
+                                    className={`font-bold py-2 px-4 rounded ${
+                                        image == null ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-700'
+                                    } text-white`}
+                                >
                                     Submit
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
