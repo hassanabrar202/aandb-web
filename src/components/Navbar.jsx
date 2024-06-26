@@ -12,6 +12,7 @@ import {
 import { GiKiwiBird } from 'react-icons/gi'
 import React, {useContext, useState} from 'react'
 import {AuthContext} from "../utils/ContextProvider";
+import {getLocalData} from "../utils/utils";
 
 export const NavbarComponent = ({ currentPath }) => {
   const { logoutUser } = useContext(AuthContext)
@@ -79,6 +80,18 @@ export const NavbarComponent = ({ currentPath }) => {
               Chat
             </Link>
           </NavbarItem>
+          { getLocalData('dbUser').role == 'admin' ? (
+          <NavbarItem >
+            <Link
+                href='/admin'
+                aria-current='page'
+                className='text-inherit'
+            >
+              Admin
+            </Link>
+          </NavbarItem>
+          ) : (<></>)
+          }
         </NavbarContent>
         <NavbarContent className='hidden sm:flex sm:flex-row' justify='end'>
           {/*<NavbarItem>*/}

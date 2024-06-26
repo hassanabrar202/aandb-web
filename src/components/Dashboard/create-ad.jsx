@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { productApi } from "../../api/product";
 import { toast } from "react-toastify";
 import { getLocalData } from "../../utils/utils";
 
 const CreateAd = () => {
     const navigate = useNavigate();
+
+    const { self } = useParams();
 
     // State variables to store form data
     const [formData, setFormData] = useState({
@@ -19,6 +21,7 @@ const CreateAd = () => {
         state: "",
         zipcode: "",
         phone: "",
+        self: false,
         birdDetails: {
             wingspan: 0,
             beakLength: 0,
@@ -103,6 +106,7 @@ const CreateAd = () => {
                 description,
                 category,
                 price,
+                self: getLocalData('dbUser').role == 'admin' ? 'true' : 'false',
                 userDetails: {
                     username: user.username,
                     email: user.email,
