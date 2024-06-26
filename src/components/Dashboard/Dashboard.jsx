@@ -79,6 +79,13 @@ const Dashboard = () => {
 
   const totalPages = Math.ceil(totalCounts / itemsPerPage);
 
+
+  const handleDeleteAd = async (id)=>{
+    await productApi.delete(id);
+    getData()
+  }
+
+
   return (
       <div className='max-w-[1500px] m-auto py-20'>
         <div className='flex w-full justify-end item-center pb-10'>
@@ -136,7 +143,8 @@ const Dashboard = () => {
               Search
             </Button>
           </div>
-          <Birds birds={filteredBirds} />
+          <Birds birds={filteredBirds}
+          handleDeleteAd={handleDeleteAd}/>
           <div>
             <ul className='flex items-center justify-center py-10 h-12 text-sm'>
               <li>

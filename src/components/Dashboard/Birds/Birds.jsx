@@ -1,9 +1,11 @@
 import React from 'react'
 import { Card, Button } from '@nextui-org/react'
 import {Link} from "react-router-dom";
+import {productApi} from "../../../api/product";
+import {getLocalData} from "../../../utils/utils";
 
-const Birds = ({ birds }) => {
-  console.log('birdssfsadsad', birds)
+const Birds = ({ birds, handleDeleteAd }) => {
+
   return (
     <div className='flex flex-wrap justify-center'>
       {birds?.map((bird, index) => (
@@ -24,6 +26,12 @@ const Birds = ({ birds }) => {
               Details
             </Button>
             </Link>
+            { bird.userDetails.username == getLocalData('dbUser').username ? (
+            <Button auto type='success' onClick={()=>handleDeleteAd(bird._id)} style={{marginLeft: '10px'}}>
+              Delete Ad
+            </Button>
+            ) : (<></>)
+            }
           </div>
         </Card>
       ))}

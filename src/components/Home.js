@@ -16,6 +16,7 @@ import { OurTeam } from './home/OurTeam'
 import { Testimonials } from './home/Testimonials'
 import { SwiperComponent } from './home/Swiper'
 import {useNavigate} from "react-router-dom";
+import {getLocalData} from "../utils/utils";
 const Home = () => {
   const navigate=useNavigate()
   const browserCategories = [
@@ -94,9 +95,12 @@ const Home = () => {
                 >
                   Get Started
                 </Button>
+                { getLocalData('dbUser') ? (<></>) :(
                 <Button href='/signup' as={Link} color='primary' variant='ghost'>
                   Sign Up
                 </Button>
+                )
+                }
               </div>
             </div>
             <Image
@@ -109,7 +113,7 @@ const Home = () => {
           </div>
         </div>
 
-        <SwiperComponent/>
+        {/*<SwiperComponent/>*/}
 
         <div
             className='bg-gray-900 py-4 flex flex-col gap-3 items-center text-center text-xl font-bold text-white sm:flex-row justify-evenly'>
@@ -177,7 +181,7 @@ const Home = () => {
         {/*  </Card>*/}
         {/*</div>*/}
 
-        <OurTeam/>
+        {/*<OurTeam/>*/}
 
         <footer className="bg-white rounded-lg shadow sm:flex sm:items-center sm:justify-between p-4 sm:p-6 xl:p-8">
           <p className="mb-4 text-sm text-center text-gray-500 dark:text-gray-400 sm:mb-0">
