@@ -7,7 +7,7 @@ import { getLocalData } from "../../utils/utils";
 
 const tabs = [
   { label: 'All Pets', key: 'all', to: 'http://localhost:3000/dashboard?tab=all' },
-  { label: 'A&B Own Pets', key: 'selfstock', to: 'http://localhost:3000/dashboard?tab=selfstock' },
+  { label: 'A&B Own Pets', key: 'self', to: 'http://localhost:3000/dashboard?tab=self' },
   { label: 'Live Stock', key: 'livestock', to: 'http://localhost:3000/dashboard?tab=livestock' },
   { label: 'Birds', key: 'bird', to: 'http://localhost:3000/dashboard?tab=bird' },
 ];
